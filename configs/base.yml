@@ -1,0 +1,68 @@
+LOCAL_TRAIN_DIR: '_results/base'  # local에서만 사용됨.
+DEBUG: False
+PRINT_EVERY: 10
+
+NUM_FOLDS: 10
+IDX_FOLD: 1
+SAMPLER: 'stratified'
+
+TRAIN:
+  BATCH_SIZE: 16
+  NUM_WORKERS: 4
+  NUM_EPOCHS: 35
+
+EVAL:
+  BATCH_SIZE: 32
+  NUM_WORKERS: 4
+  PRINT_ANALYSIS: False
+
+MODEL:
+  # ['fbresnet152', 'bninception', 'resnext101_32x4d', 'resnext101_64x4d', 'inceptionv4', 'inceptionresnetv2',
+  # 'alexnet', 'densenet121', 'densenet169', 'densenet201', 'densenet161', 'resnet18', 'resnet34', 'resnet50',
+  # 'resnet101', 'resnet152', 'inceptionv3', 'squeezenet1_0', 'squeezenet1_1', 'vgg11', 'vgg11_bn', 'vgg13',
+  # 'vgg13_bn', 'vgg16', 'vgg16_bn', 'vgg19_bn', 'vgg19', 'nasnetamobile', 'nasnetalarge', 'dpn68', 'dpn68b', 'dpn92',
+  # 'dpn98', 'dpn131', 'dpn107', 'xception', 'senet154', 'se_resnet50', 'se_resnet101', 'se_resnet152',
+  # 'se_resnext50_32x4d', 'se_resnext101_32x4d', 'cafferesnet101', 'pnasnet5large', 'polynet']
+  NAME: 'resnet9'
+  GEM: False
+  DOUBLE_FC: False
+
+DATA:
+  # 전체 갯수 3913
+  # 원본 (3072, 3900) 비율 0.79
+  # 160,192,224,256,288,320,352,384,416,448,480,512,544,576
+  IMG_H: 512
+  IMG_W: 640
+  PREPROCESS: 'ben_clahe'
+
+LOSS:
+  # CELoss, FocalLoss, SCELoss(symmetric)
+  NAME: 'CELoss'
+  LABEL_SMOOTHING: False
+
+OPTIMIZER:
+  NAME: 'adam'
+  LR: 0.0002
+  NO_BIAS_DECAY: False
+  PARAMS:
+#    weight_decay: 0.01
+
+SCHEDULER:
+  NAME: 'multi_step'
+#  NAME: 'one_cycle_lr'
+  PARAMS:
+    # multi_step
+    milestones: [5]
+    gamma: 0.1
+
+    # one_cycle_lr
+#    max_lr: 0.001
+#    pct_start: 0.033
+#    anneal_strategy: 'cos'
+#    epochs: 30
+#    steps_per_epoch: 207
+
+  WARMUP: True  # warmup 킬거면 lr을 1/multiplier로 설정해. 그리고 생각했던 epoch+5해.
+  WARMUP_PARAMS:
+    multiplier: 5
+    total_epoch: 4

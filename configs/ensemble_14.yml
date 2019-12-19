@@ -1,0 +1,9 @@
+MODEL:
+  NAME: 'resnet34'
+  GEM: False
+  DOUBLE_FC: False
+
+DATA:
+  IMG_H: 384
+  IMG_W: 512
+  PREPROCESS: 'ben_clahe'
