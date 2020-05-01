@@ -1,3 +1,8 @@
+"""
+Reference:
+- https://github.com/khornlund/severstal-steel-defect-detection/blob/master/sever/model/loss.py
+"""
+
 import torch.nn as nn
 from torch.nn.modules.batchnorm import _BatchNorm
 from torch.nn import GroupNorm, Conv2d, Linear
